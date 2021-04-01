@@ -6,6 +6,8 @@
 //  Copyright © 2021 Rocket Insights. All rights reserved.
 //
 
+#if canImport(UIKit)
+
 import Foundation
 import Combine
 import CombineEx
@@ -104,3 +106,5 @@ public extension AppFlow {
             .eraseType()
     }
 }
+
+#endif

@@ -11,6 +11,10 @@ import Combine
 import CombineEx
 
 public struct URLDataPublisher {
+    public init(data: @escaping (URLRequest) -> URLDataPublisher.Publisher) {
+        self.data = data
+    }
+
     public typealias Publisher = AnySingleValuePublisher<(data: Data, response: URLResponse), URLError>
     var data: (_ request: URLRequest) -> Publisher
 
