@@ -16,7 +16,7 @@ public struct URLDataPublisher {
     }
 
     public typealias Publisher = AnySingleValuePublisher<(data: Data, response: URLResponse), URLError>
-    var data: (_ request: URLRequest) -> Publisher
+    public var data: (_ request: URLRequest) -> Publisher
 
     public func callAsFunction(for request: URLRequest) -> Publisher {
         data(request)
