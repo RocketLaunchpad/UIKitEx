@@ -14,15 +14,15 @@ let package = Package(
             targets: ["UIKitEx"]),
     ],
     dependencies: [
-        .package(name: "FoundationEx", url: "https://github.com/RocketLaunchpad/FoundationEx.git", from: "1.0.0"),
-        .package(name: "CombineEx", url: "https://github.com/RocketLaunchpad/CombineEx.git", from: "1.0.0"),
-        .package(name: "ReducerArchitecture", url: "https://github.com/RocketLaunchpad/ReducerArchitecture.git", from: "1.0.0"),
-        // .package(name: "Functional", url: "https://github.com/RocketLaunchpad/Functional.git", from: "1.0.0"),
+        .package(name: "FoundationEx", url: "https://github.com/RocketLaunchpad/FoundationEx.git", .branch("main")),
+        .package(name: "CombineEx", url: "https://github.com/RocketLaunchpad/CombineEx.git", .branch("main")),
+        .package(name: "ReducerArchitecture", url: "https://github.com/RocketLaunchpad/ReducerArchitecture.git", .branch("master")),
+        .package(name: "Functional", url: "https://github.com/RocketLaunchpad/Functional.git", .branch("main"))
     ],
     targets: [
         .target(
             name: "UIKitEx",
-            dependencies: ["FoundationEx", "CombineEx", "ReducerArchitecture"]
+            dependencies: ["FoundationEx", "CombineEx", "ReducerArchitecture", "Functional"]
         ),
         .testTarget(
             name: "UIKitExTests",
