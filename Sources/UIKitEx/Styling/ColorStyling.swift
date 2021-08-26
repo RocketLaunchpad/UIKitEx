@@ -7,6 +7,7 @@
 //
 
 import CoreGraphics
+import FoundationEx
 
 public extension Styling {
     struct Color {
@@ -43,38 +44,9 @@ extension Styling.Color: ExpressibleByStringLiteral {
     }
 
     public init(hex: String, opacity: CGFloat? = nil) throws {
-        func getComponent(_ remaining: Substring) throws -> (CGFloat, Substring) {
-            let componentHex = remaining.prefix(2)
-            guard componentHex.count == 2 else {
-                throw ParseHexError.invalidComponentFormat
-            }
-            guard let value = Int(componentHex, radix: 16) else {
-                throw ParseHexError.invalidComponentFormat
-            }
-            return (CGFloat(value) / 255.0, remaining.dropFirst(2))
-        }
-
-        guard hex.count >= 6 else {
-            throw ParseHexError.invalidCharCount
-        }
-
-        var remaining = hex[...]
-        if remaining.starts(with: "#") {
-            remaining = remaining.dropFirst()
-        }
-
-        (red, remaining) = try getComponent(remaining)
-        (green, remaining) = try getComponent(remaining)
-        (blue, remaining) = try getComponent(remaining)
-        if remaining.isEmpty {
-            self.opacity = opacity ?? 1
-        }
-        else {
-            guard opacity == nil else {
-                throw ParseHexError.invalidArgs
-            }
-            (self.opacity, remaining) = try getComponent(remaining)
-        }
+        let parsedOpacity: CGFloat
+        (red, green, blue, parsedOpacity) = try hex.parseAsHexColor()
+        self.opacity = opacity ?? parsedOpacity
     }
 
     public static func literal(hex: String, opacity: CGFloat) -> Self {
