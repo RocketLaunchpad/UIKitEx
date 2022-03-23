@@ -10,6 +10,13 @@
 
 import UIKit
 
+// Box types seemed convenient for diffable data sources, but they don't work in general because
+// if an element at a certain index changes, a diffable data source that treats the index
+// as the identifier is unable to detect the change.
+
+// Box types can be used only in the cases where the data is either never changed or is only appended
+// so that the existing indexes always describe the same elements.
+
 /// Values for diffable data sources
 public struct Box<T>: Hashable {
     public let index: Int
