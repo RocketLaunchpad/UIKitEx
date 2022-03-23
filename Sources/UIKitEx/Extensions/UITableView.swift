@@ -10,6 +10,38 @@
 
 import UIKit
 
+public class TableViewArrayDataSource<T, Cell: UITableViewCell>: NSObject, UITableViewDataSource {
+    var items: [T] = []
+    let configureCell: (Cell, T, UITableView) -> Void
+
+    public init(_ items: [T] = [], configureCell: @escaping (Cell, T, UITableView) -> Void) {
+        self.items = items
+        self.configureCell = configureCell
+        super.init()
+        update(items)
+    }
+
+    public func value(at indexPath: IndexPath) -> T? {
+        guard indexPath.row < items.count else { return nil }
+        return items[indexPath.row]
+    }
+
+    public func update(_ items: [T]) {
+        self.items = items
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        items.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: Cell = tableView.dequeueCell(for: indexPath)
+        let index = indexPath.item
+        configureCell(cell, items[index], tableView)
+        return cell
+    }
+}
+
 public extension UITableViewCell {
     class var reuseID: String {
         return String(describing: self)

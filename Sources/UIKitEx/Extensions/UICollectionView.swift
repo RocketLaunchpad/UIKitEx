@@ -55,6 +55,33 @@ public struct Box2<T>: Hashable {
     }
 }
 
+public class CollectionViewArrayDataSource<T, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
+    var items: [T] = []
+    let configureCell: (Cell, T, UICollectionView) -> Void
+
+    public init(_ items: [T] = [], configureCell: @escaping (Cell, T, UICollectionView) -> Void) {
+        self.items = items
+        self.configureCell = configureCell
+        super.init()
+        update(items)
+    }
+
+    public func update(_ items: [T]) {
+        self.items = items
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        items.count
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: Cell = collectionView.dequeueCell(for: indexPath)
+        let index = indexPath.item
+        configureCell(cell, items[index], collectionView)
+        return cell
+    }
+}
+
 public extension UICollectionReusableView {
     class var reuseID: String {
         return String(describing: self)
