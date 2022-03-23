@@ -10,6 +10,51 @@
 
 import UIKit
 
+/// Values for diffable data sources
+public struct Box<T>: Hashable {
+    public let index: Int
+    public let value: T
+    public let isSelected: Bool
+
+    public init(index: Int, value: T, isSelected: Bool) {
+        self.index = index
+        self.value = value
+        self.isSelected = isSelected
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(index)
+        hasher.combine(isSelected)
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.index == rhs.index &&
+        lhs.isSelected == rhs.isSelected
+    }
+}
+
+public struct Box2<T>: Hashable {
+    public let index1: Int
+    public let index2: Int
+    public let value: T
+
+    public init(index1: Int, index2: Int, value: T) {
+        self.index1 = index1
+        self.index2 = index2
+        self.value = value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(index1)
+        hasher.combine(index2)
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        (lhs.index1 == rhs.index1) &&
+        (lhs.index2 == rhs.index2)
+    }
+}
+
 public class CollectionViewArrayDataSource<T, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
     var items: [T] = []
     let configureCell: (Cell, T, UICollectionView) -> Void
