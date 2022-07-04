@@ -43,6 +43,7 @@ public extension ReducerArchitectureVC {
 }
 
 public extension ReducerArchitectureVC where Self: BasicViewController {
+    @MainActor
     var value: AnyPublisher<Store.PublishedValue, Cancel> {
         store.value.merge(
             with: ended
