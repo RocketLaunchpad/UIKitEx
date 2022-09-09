@@ -22,7 +22,13 @@ let package = Package(
     targets: [
         .target(
             name: "UIKitEx",
-            dependencies: ["FoundationEx", "CombineEx", "ReducerArchitecture", "Functional"]
+            dependencies: ["FoundationEx", "CombineEx", "ReducerArchitecture", "Functional"],
+            swiftSettings: [.unsafeFlags([
+                "-Xfrontend",
+                "-warn-long-function-bodies=100",
+                "-Xfrontend",
+                "-warn-long-expression-type-checking=100"
+            ])]
         ),
         .testTarget(
             name: "UIKitExTests",
